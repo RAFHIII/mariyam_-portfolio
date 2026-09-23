@@ -1,8 +1,5 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
-import AppImage from '@/components/ui/AppImage';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import VideoMorphSlider from '@/components/ui/VideoMorphSlider';
 
 interface WorkItem {
@@ -91,21 +88,6 @@ export default function SelectedWorksSection() {
                             <span className="italic font-light text-cream/40">videos.</span>
                         </h2>
                     </div>
-                    <Button
-                        asChild
-                        variant="ghost"
-                        className="reveal reveal-delay-2 hidden md:flex items-center gap-3 group border-b border-cream/20 pb-3 hover:border-gold transition-colors shrink-0 rounded-none h-auto p-0"
-                    >
-                        <a href="#reel">
-                            <span className="font-body text-xs uppercase tracking-widest text-cream/50 group-hover:text-cream transition-colors">
-                                Full Editing Portfolio
-                            </span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
-                                className="text-cream/50 group-hover:text-gold group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
-                            </svg>
-                        </a>
-                    </Button>
                 </div>
 
                 {/* Work items slider */}
