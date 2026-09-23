@@ -234,6 +234,43 @@ export default function TreatmentSection() {
                                         </a>
                                     </Button>
                                 </div>
+
+                                {/* Social Links */}
+                                <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between">
+                                    <span className="font-body text-[10px] uppercase tracking-widest text-cream/30">
+                                        Social
+                                    </span>
+                                    <div className="flex items-center gap-3">
+                                        <a
+                                            href="https://www.instagram.com/fram_e8m?igsi=OHBmNTlqZzQxcHh6&utm_source=qr"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 text-cream/60 hover:text-gold transition-colors font-body text-xs py-1 px-2 rounded hover:bg-white/5"
+                                        >
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-gold">
+                                                <rect x="2" y="2" width="20" height="20" rx="5" />
+                                                <circle cx="12" cy="12" r="4" />
+                                                <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" />
+                                            </svg>
+                                            <span>Instagram</span>
+                                            <ArrowUpRight className="w-3 h-3 opacity-50" />
+                                        </a>
+                                        <a
+                                            href="https://www.linkedin.com/in/rafhiyamariyam/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 text-cream/60 hover:text-gold transition-colors font-body text-xs py-1 px-2 rounded hover:bg-white/5"
+                                        >
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
+                                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                                <rect x="2" y="9" width="4" height="12" />
+                                                <circle cx="4" cy="4" r="2" />
+                                            </svg>
+                                            <span>LinkedIn</span>
+                                            <ArrowUpRight className="w-3 h-3 opacity-50" />
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

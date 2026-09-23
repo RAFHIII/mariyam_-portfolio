@@ -63,8 +63,22 @@ export default function Footer() {
             <a href="#work" className="hover:text-cream/70 transition-colors">Work</a>
             <a href="#process" className="hover:text-cream/70 transition-colors">Process</a>
             <a href="#bts" className="hover:text-cream/70 transition-colors">About</a>
-            <a href="#" className="hover:text-cream/70 transition-colors">Instagram</a>
-            <a href="#" className="hover:text-cream/70 transition-colors">LinkedIn</a>
+            <a
+              href="https://www.instagram.com/fram_e8m?igsi=OHBmNTlqZzQxcHh6&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream/70 transition-colors"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.linkedin.com/in/rafhiyamariyam/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream/70 transition-colors"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
 

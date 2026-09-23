@@ -47,15 +47,48 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA */}
-        <Button
-          asChild
-          variant="outline"
-          size="sm"
-          className="border-gold/60 text-gold hover:bg-gold hover:text-obsidian text-[10px] font-body font-semibold uppercase tracking-widest px-6 py-2.5 h-auto rounded-none transition-all duration-300"
-        >
-          <a href="#treatment">Hire Me</a>
-        </Button>
+        {/* Social Icons & CTA */}
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-2">
+            <a
+              href="https://www.instagram.com/fram_e8m?igsi=OHBmNTlqZzQxcHh6&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cream/50 hover:text-gold transition-colors p-2 rounded-full hover:bg-white/5"
+              aria-label="Instagram Profile"
+              title="Instagram @fram_e8m"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/rafhiyamariyam/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cream/50 hover:text-gold transition-colors p-2 rounded-full hover:bg-white/5"
+              aria-label="LinkedIn Profile"
+              title="LinkedIn Profile"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+          </div>
+
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="border-gold/60 text-gold hover:bg-gold hover:text-obsidian text-[10px] font-body font-semibold uppercase tracking-widest px-6 py-2.5 h-auto rounded-none transition-all duration-300"
+          >
+            <a href="#treatment">Hire Me</a>
+          </Button>
+        </div>
       </div>
     </header>
   );

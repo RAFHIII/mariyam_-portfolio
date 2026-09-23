@@ -106,7 +106,12 @@ export default function BTSSection() {
                             variant="ghost"
                             className="flex items-center gap-4 group flex-shrink-0 rounded-none h-auto p-0"
                         >
-                            <a href="#" aria-label="Watch full director reel">
+                            <a
+                                href="https://www.instagram.com/fram_e8m?igsi=OHBmNTlqZzQxcHh6&utm_source=qr"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Watch full director reel on Instagram"
+                            >
                                 <div className="w-16 h-16 rounded-full border border-gold/60 flex items-center justify-center group-hover:bg-gold group-hover:border-gold transition-all duration-300">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-gold group-hover:text-obsidian transition-colors ml-0.5">
                                         <path d="M8 5v14l11-7z" />
