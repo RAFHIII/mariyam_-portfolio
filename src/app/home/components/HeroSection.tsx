@@ -190,7 +190,10 @@ export default function HeroSection() {
                             </a>
                         </Button>
                         <a
-                            href="#treatment"
+                            href="/resume.pdf"
+                            download="Mariyam_Rafhiya_Resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="group flex items-center justify-between border-b border-cream/20 py-3 hover:border-gold transition-colors duration-300">
 
                             <span className="font-body text-xs uppercase tracking-widest text-cream mr-6 group-hover:text-gold transition-colors">

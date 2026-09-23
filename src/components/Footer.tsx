@@ -64,6 +64,15 @@ export default function Footer() {
             <a href="#process" className="hover:text-cream/70 transition-colors">Process</a>
             <a href="#bts" className="hover:text-cream/70 transition-colors">About</a>
             <a
+              href="/resume.pdf"
+              download="Mariyam_Rafhiya_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cream/70 transition-colors"
+            >
+              Resume
+            </a>
+            <a
               href="https://www.instagram.com/fram_e8m?igsi=OHBmNTlqZzQxcHh6&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"

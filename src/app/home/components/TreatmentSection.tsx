@@ -291,7 +291,13 @@ export default function TreatmentSection() {
                                 size="sm"
                                 className="text-gold hover:text-cream text-xs font-body uppercase tracking-widest hover:bg-transparent px-2"
                             >
-                                <a href="/resume.pdf" download="Mariyam_Rafhiya_Resume.pdf" className="flex items-center gap-1">
+                                <a
+                                    href="/resume.pdf"
+                                    download="Mariyam_Rafhiya_Resume.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1"
+                                >
                                     Download PDF
                                     <ArrowUpRight className="w-3.5 h-3.5" />
                                 </a>
