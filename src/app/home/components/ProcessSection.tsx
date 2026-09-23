@@ -116,7 +116,7 @@ export default function ProcessSection() {
                         {[
                             { name: 'DaVinci Resolve', logo: '/davinci-resolve.svg' },
                             { name: 'CapCut', logo: '/capcut.svg' },
-                            { name: 'VN Editor', logo: '/vn-app-logo-png-allpngfree.com.png' },
+                            { name: 'VN Editor', logo: '/vn.svg' },
                             { name: 'InShot', logo: '/inshot.svg' },
                             { name: 'PicsArt', logo: '/picsart.svg' },
                             { name: 'Snapseed', logo: '/snapseed-seeklogo.svg' }

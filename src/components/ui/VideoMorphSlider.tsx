@@ -227,6 +227,7 @@ class MorphEngine {
   intersectionObserver: any;
   isVisible: boolean;
   isMuted: boolean;
+  isPlaying: boolean;
   boundLoop: any;
   raf: any;
 
@@ -244,7 +245,8 @@ class MorphEngine {
     this.shownIndex = startIndex;
     this.tween = null;
     this.isVisible = true;
-    this.isMuted = false;
+    this.isMuted = true;
+    this.isPlaying = true;
 
     this.renderer = new Renderer({
       alpha: false,
@@ -299,7 +301,7 @@ class MorphEngine {
     this.intersectionObserver = new IntersectionObserver((entries) => {
       this.isVisible = entries[0].isIntersecting;
       if (this.isVisible) {
-        if (this.textures[this.current] && this.textures[this.current].image instanceof HTMLVideoElement) {
+        if (this.isPlaying && this.textures[this.current] && this.textures[this.current].image instanceof HTMLVideoElement) {
           const curVid = this.textures[this.current].image;
           curVid.muted = this.isMuted;
           curVid.volume = 1.0;
@@ -332,12 +334,19 @@ class MorphEngine {
       video.loop = true;
       video.playsInline = true;
       video.autoplay = true;
-      video.play().catch(() => {
-        if (!video.muted) {
-          video.muted = true;
-          video.play().catch(() => {});
+      if (index === this.current) {
+        if (this.isPlaying) {
+          video.play().catch(() => {
+            if (!video.muted) {
+              video.muted = true;
+              video.play().catch(() => {});
+            }
+          });
         }
-      });
+      } else {
+        video.muted = true;
+        video.play().catch(() => {});
+      }
 
       const texture = new Texture(this.gl, { generateMipmaps: false });
       
@@ -437,6 +446,20 @@ class MorphEngine {
     if (this.onIndexChange) this.onIndexChange(index);
   }
 
+  setPlaying(playing: boolean) {
+    this.isPlaying = playing;
+    const curVid = this.textures[this.current]?.image;
+    if (curVid instanceof HTMLVideoElement) {
+      if (playing) {
+        curVid.muted = this.isMuted;
+        curVid.volume = 1.0;
+        curVid.play().catch(() => {});
+      } else {
+        curVid.pause();
+      }
+    }
+  }
+
   setMuted(muted: boolean) {
     this.isMuted = muted;
     this.textures.forEach((t: any, idx: number) => {
@@ -444,7 +467,7 @@ class MorphEngine {
         if (idx === this.current) {
           t.image.muted = muted;
           t.image.volume = 1.0;
-          if (!muted) {
+          if (!muted && this.isPlaying) {
             t.image.play().catch(() => {});
           }
         } else {
@@ -460,6 +483,13 @@ class MorphEngine {
       this.textures[this.current].image.pause();
       this.textures[this.current].image.muted = true;
     }
+
+    // Ensure all non-target videos are muted
+    this.textures.forEach((t: any, idx: number) => {
+      if (idx !== target && t && t.image instanceof HTMLVideoElement) {
+        t.image.muted = true;
+      }
+    });
     
     this.current = target;
     this.program.uniforms.tCurrent.value = this.textures[target];
@@ -474,7 +504,11 @@ class MorphEngine {
       const nextVid = this.textures[target].image;
       nextVid.muted = this.isMuted;
       nextVid.volume = 1.0;
-      nextVid.play().catch(() => {});
+      if (this.isPlaying) {
+        nextVid.play().catch(() => {});
+      } else {
+        nextVid.pause();
+      }
     }
   }
 
@@ -604,7 +638,17 @@ export default function VideoMorphSlider({
   const engineRef = useRef<MorphEngine | null>(null);
   const [index, setIndex] = useState(startIndex);
   const [hovering, setHovering] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlay = useCallback((e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsPlaying((prev) => {
+      const next = !prev;
+      engineRef.current?.setPlaying(next);
+      return next;
+    });
+  }, []);
 
   const toggleSound = useCallback((e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -614,6 +658,12 @@ export default function VideoMorphSlider({
       return next;
     });
   }, []);
+
+  useEffect(() => {
+    if (engineRef.current) {
+      engineRef.current.setPlaying(isPlaying);
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     if (engineRef.current) {
@@ -754,37 +804,74 @@ export default function VideoMorphSlider({
         onKeyDown={onKeyDown}
       />
 
-      {/* Audio / Sound Toggle */}
-      <button
-        type="button"
-        onClick={toggleSound}
-        className={`pointer-events-auto absolute top-5 right-5 z-[5] inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-body font-semibold backdrop-blur-md transition-all duration-300 cursor-pointer shadow-lg ${
-          !isMuted
-            ? 'bg-gold text-obsidian hover:bg-cream border border-gold shadow-[0_0_20px_rgba(201,168,76,0.5)]'
-            : 'bg-black/70 text-white/90 border border-white/20 hover:border-gold/60 hover:text-gold'
-        }`}
-        aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
-      >
-        {!isMuted ? (
-          <>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-            </svg>
-            <span>Sound On</span>
-          </>
-        ) : (
-          <>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-              <line x1="23" y1="9" x2="17" y2="15" />
-              <line x1="17" y1="9" x2="23" y2="15" />
-            </svg>
-            <span>Tap for Audio</span>
-          </>
-        )}
-      </button>
+      {/* Top Media Controls: Play/Pause + Audio Toggle */}
+      <div className="pointer-events-auto absolute top-4 right-4 sm:top-5 sm:right-5 z-[5] inline-flex items-center gap-1.5 p-1 rounded-full bg-[#0b0b0d]/80 backdrop-blur-md border border-white/15 shadow-xl transition-all duration-300">
+        {/* Play / Pause Toggle */}
+        <button
+          type="button"
+          onClick={togglePlay}
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body font-semibold transition-all duration-200 cursor-pointer ${
+            isPlaying
+              ? 'bg-white/10 text-cream hover:bg-white/20 hover:text-white'
+              : 'bg-gold text-obsidian hover:bg-cream shadow-[0_0_12px_rgba(201,168,76,0.5)]'
+          }`}
+          aria-label={isPlaying ? 'Pause video' : 'Play video'}
+          title={isPlaying ? 'Pause video' : 'Play video'}
+        >
+          {isPlaying ? (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </svg>
+              <span>Pause</span>
+            </>
+          ) : (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              <span>Play</span>
+            </>
+          )}
+        </button>
+
+        {/* Divider */}
+        <div className="w-[1px] h-3.5 bg-white/20" />
+
+        {/* Audio / Sound Toggle */}
+        <button
+          type="button"
+          onClick={toggleSound}
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-body font-semibold transition-all duration-200 cursor-pointer ${
+            !isMuted
+              ? 'bg-gold text-obsidian hover:bg-cream shadow-[0_0_12px_rgba(201,168,76,0.5)]'
+              : 'bg-white/10 text-cream/75 hover:bg-white/20 hover:text-cream'
+          }`}
+          aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
+          title={isMuted ? 'Tap for audio' : 'Mute audio'}
+        >
+          {!isMuted ? (
+            <>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+              </svg>
+              <span>Sound On</span>
+            </>
+          ) : (
+            <>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <span>Tap for Audio</span>
+            </>
+          )}
+        </button>
+      </div>
 
       {showCaptions && hasCaptions && (
         <div
