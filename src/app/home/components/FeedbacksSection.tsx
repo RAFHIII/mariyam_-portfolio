@@ -66,7 +66,7 @@ export default function FeedbacksSection() {
     }, []);
 
     return (
-        <section id="feedback" ref={sectionRef} className="py-24 md:py-32 px-6 md:px-12 bg-obsidian border-b border-white/[0.06]">
+        <section id="feedback" ref={sectionRef} className="py-24 md:py-32 px-6 md:px-12 bg-transparent border-b border-white/[0.06]">
             <div className="max-w-8xl mx-auto">
                 {/* Header */}
                 <div className="mb-16 text-center md:text-left reveal">

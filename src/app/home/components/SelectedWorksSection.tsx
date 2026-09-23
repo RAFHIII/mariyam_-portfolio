@@ -76,7 +76,7 @@ export default function SelectedWorksSection() {
     }, []);
 
     return (
-        <section id="work" ref={sectionRef} className="py-28 md:py-40 px-6 md:px-12 bg-obsidian border-b border-white/[0.06]">
+        <section id="work" ref={sectionRef} className="py-28 md:py-40 px-6 md:px-12 bg-transparent border-b border-white/[0.06]">
             <div className="max-w-8xl mx-auto">
 
                 {/* Header */}

@@ -34,7 +34,7 @@ export default function TreatmentSection() {
     };
 
     return (
-        <section id="treatment" ref={sectionRef} className="py-28 md:py-40 px-6 md:px-12 bg-obsidian">
+        <section id="treatment" ref={sectionRef} className="py-28 md:py-40 px-6 md:px-12 bg-transparent">
             <div className="max-w-8xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-[60fr_40fr] gap-10 md:gap-16 items-start">
 

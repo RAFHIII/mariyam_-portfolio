@@ -36,7 +36,7 @@ export default function BTSSection() {
     }, []);
 
     return (
-        <section id="bts" ref={sectionRef} className="py-28 md:py-40 px-6 md:px-12 bg-obsidian border-b border-white/[0.06]">
+        <section id="bts" ref={sectionRef} className="py-28 md:py-40 px-6 md:px-12 bg-transparent border-b border-white/[0.06]">
             <div className="max-w-8xl mx-auto">
 
                 {/* Header */}

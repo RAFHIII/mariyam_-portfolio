@@ -51,7 +51,7 @@ export default function HeroSection() {
     return (
         <section
             ref={heroRef}
-            className="relative min-h-screen flex items-center overflow-hidden bg-obsidian pt-20">
+            className="relative min-h-screen flex items-center overflow-hidden bg-transparent pt-20">
 
             {/* Scan line */}
             <div className="scan-line" />
