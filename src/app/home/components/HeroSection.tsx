@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import AppImage from '@/components/ui/AppImage';
 import { Button } from '@/components/ui/button';
-import TextPressure from '@/components/ui/TextPressure';
+import VariableProximity from '@/components/ui/VariableProximity';
 
 const POLAROIDS = [
     {
@@ -26,6 +26,7 @@ const POLAROIDS = [
 
 export default function HeroSection() {
     const heroRef = useRef<HTMLDivElement>(null);
+    const headlineContainerRef = useRef<HTMLDivElement>(null);
 
     // Subtle mouse parallax
     useEffect(() => {
@@ -135,32 +136,28 @@ export default function HeroSection() {
 
 
 
-                    {/* Main headline */}
-                    <div className="mb-8 w-full relative group">
-                        <div className="h-[25vw] md:h-[180px] w-full">
-                            <TextPressure
-                                text="MARIYAM"
-                                flex={true}
-                                alpha={false}
-                                stroke={false}
-                                width={true}
-                                weight={true}
-                                italic={true}
-                                textColor="#F5F0E1"
-                                minFontSize={60}
+                    {/* Main headline with VariableProximity */}
+                    <div ref={headlineContainerRef} className="mb-8 w-full relative select-none">
+                        <div className="block">
+                            <VariableProximity
+                                label="MARIYAM"
+                                className="text-cream text-[clamp(3.5rem,10vw,8.5rem)] font-bold tracking-tight block leading-[0.9]"
+                                fromFontVariationSettings="'wght' 400, 'opsz' 14"
+                                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                                containerRef={headlineContainerRef}
+                                radius={160}
+                                falloff="linear"
                             />
                         </div>
-                        <div className="h-[25vw] md:h-[180px] w-full -mt-4 md:-mt-8">
-                            <TextPressure
-                                text="RAFHIYA"
-                                flex={true}
-                                alpha={false}
-                                stroke={false}
-                                width={true}
-                                weight={true}
-                                italic={true}
-                                textColor="#C9A84C"
-                                minFontSize={60}
+                        <div className="block -mt-1 md:-mt-3">
+                            <VariableProximity
+                                label="RAFHIYA"
+                                className="text-gold text-[clamp(3.5rem,10vw,8.5rem)] font-bold tracking-tight block leading-[0.9]"
+                                fromFontVariationSettings="'wght' 400, 'opsz' 14"
+                                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                                containerRef={headlineContainerRef}
+                                radius={160}
+                                falloff="linear"
                             />
                         </div>
                     </div>
