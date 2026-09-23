@@ -97,19 +97,24 @@ export default function HeroSection() {
                 </div>
             )}
 
-            {/* ── STORYBOARD PANEL (top-right) ── */}
-            <div className="absolute top-[15%] right-[22%] md:right-[28%] w-[90px] md:w-[110px] z-10 rotate-1 hidden lg:block">
-                <div className="border border-graphite/60 bg-cream/5 p-1.5">
-                    <div className="grid grid-cols-2 gap-[3px]">
+            {/* ── STORYBOARD PANEL (placed on left side below polaroid A) ── */}
+            <div
+                data-parallax="true"
+                data-base-transform="rotate(-2deg)"
+                className="absolute top-[48%] left-[5%] md:left-[8%] w-[100px] md:w-[125px] z-10 -rotate-2 hidden lg:block cursor-pointer hover:rotate-0 transition-transform duration-300"
+                style={{ willChange: 'transform' }}
+            >
+                <div className="border border-graphite/60 bg-cream/5 p-2 backdrop-blur-[2px] shadow-xl">
+                    <div className="grid grid-cols-2 gap-1">
                         {[0, 1, 2, 3].map((i) =>
-                            <div key={i} className="bg-graphite/30 aspect-video relative">
+                            <div key={i} className="bg-graphite/30 aspect-video relative overflow-hidden">
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="w-full h-[1px] bg-gold/20" />
                                 </div>
                             </div>
                         )}
                     </div>
-                    <p className="font-hand text-[9px] text-gold/70 mt-1 text-center">
+                    <p className="font-hand text-[10px] text-gold/80 mt-1.5 text-center">
                         shot list — seq. 04
                     </p>
                 </div>
