@@ -141,22 +141,22 @@ export default function HeroSection() {
                         <div className="block">
                             <VariableProximity
                                 label="MARIYAM"
-                                className="text-cream text-[clamp(3.5rem,10vw,8.5rem)] font-bold tracking-tight block leading-[0.9]"
+                                className="text-cream text-[clamp(3.5rem,10vw,8.5rem)] tracking-tight block leading-[0.88] uppercase"
                                 fromFontVariationSettings="'wght' 400, 'opsz' 14"
                                 toFontVariationSettings="'wght' 1000, 'opsz' 40"
                                 containerRef={headlineContainerRef}
-                                radius={160}
+                                radius={240}
                                 falloff="linear"
                             />
                         </div>
                         <div className="block -mt-1 md:-mt-3">
                             <VariableProximity
                                 label="RAFHIYA"
-                                className="text-gold text-[clamp(3.5rem,10vw,8.5rem)] font-bold tracking-tight block leading-[0.9]"
+                                className="text-gold text-[clamp(3.5rem,10vw,8.5rem)] tracking-tight block leading-[0.88] uppercase"
                                 fromFontVariationSettings="'wght' 400, 'opsz' 14"
                                 toFontVariationSettings="'wght' 1000, 'opsz' 40"
                                 containerRef={headlineContainerRef}
-                                radius={160}
+                                radius={240}
                                 falloff="linear"
                             />
                         </div>
