@@ -1,27 +1,11 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-
-const ROLES = [
-    { value: 'brand', label: 'Brand / Business' },
-    { value: 'institute', label: 'Educational Institute' },
-    { value: 'creator', label: 'Content Creator' },
-    { value: 'agency', label: 'Marketing Agency' },
-];
+import { Mail, Phone, Copy, Check, MessageCircle, Download, ArrowUpRight } from 'lucide-react';
 
 export default function TreatmentSection() {
-    const [email, setEmail] = useState('');
-    const [role, setRole] = useState('');
-    const [submitted, setSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [copiedEmail, setCopiedEmail] = useState(false);
+    const [copiedPhone, setCopiedPhone] = useState(false);
     const sectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -38,22 +22,15 @@ export default function TreatmentSection() {
         return () => observer.disconnect();
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email || !role) return;
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            setSubmitted(true);
-
-            // Trigger file download
-            const a = document.createElement('a');
-            a.href = '/resume.pdf';
-            a.download = 'Mariyam_Rafhiya_Resume.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }, 1200);
+    const copyToClipboard = (text: string, type: 'email' | 'phone') => {
+        navigator.clipboard.writeText(text);
+        if (type === 'email') {
+            setCopiedEmail(true);
+            setTimeout(() => setCopiedEmail(false), 2000);
+        } else {
+            setCopiedPhone(true);
+            setTimeout(() => setCopiedPhone(false), 2000);
+        }
     };
 
     return (
@@ -109,7 +86,7 @@ export default function TreatmentSection() {
                                     <img
                                         key={i}
                                         src={src}
-                                        alt={`Director who downloaded the treatment template, profile ${i + 1}`}
+                                        alt={`Director who collaborated with Mariyam, profile ${i + 1}`}
                                         className="w-8 h-8 rounded-full border-2 border-obsidian grayscale"
                                     />
                                 ))}
@@ -120,129 +97,172 @@ export default function TreatmentSection() {
                         </div>
                     </div>
 
-                    {/* 40 — The form */}
-                    <div className="lg:sticky lg:top-28 reveal reveal-delay-2">
-                        <div className="border border-white/[0.08] p-6 md:p-8 relative overflow-hidden rounded-xl">
+                    {/* 40 — Contact Me Here */}
+                    <div className="lg:sticky lg:top-28 reveal reveal-delay-2 space-y-6">
+                        <div className="border border-white/[0.08] p-6 md:p-8 relative overflow-hidden rounded-xl bg-white/[0.02] backdrop-blur-sm">
                             {/* Paper texture accent */}
                             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold/40 via-gold/20 to-transparent" />
 
-                            {!submitted ? (
-                                <>
-                                    <div className="mb-8">
-                                        <p className="font-hand text-gold text-xl mb-1">Get the Portfolio — free</p>
-                                        <p className="font-body text-xs text-cream/30 font-light">
-                                            No spam. One email. My complete resume and portfolio.
-                                        </p>
-                                    </div>
+                            <div className="mb-8">
+                                <p className="font-hand text-gold text-2xl mb-1">contact me here</p>
+                                <h3 className="font-display text-cream text-2xl font-bold tracking-tight mb-2">
+                                    Let&apos;s create something remarkable.
+                                </h3>
+                                <p className="font-body text-xs text-cream/40 font-light leading-relaxed">
+                                    Ready to discuss a project, collaboration, or creative role? Reach out directly via email or phone.
+                                </p>
+                            </div>
 
-                                    <form onSubmit={handleSubmit} className="space-y-8">
-                                        {/* Email */}
-                                        <div className="space-y-2">
-                                            <label className="block font-body text-[9px] uppercase tracking-widest text-cream/30">
-                                                Your Email
-                                            </label>
-                                            <Input
-                                                type="email"
-                                                required
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                placeholder="name@label.com"
-                                                className="bg-transparent border-0 border-b border-input rounded-none px-0 h-auto py-3 text-sm text-cream placeholder:text-cream/20 focus-visible:ring-0 focus-visible:border-gold transition-colors"
-                                            />
+                            {/* Contact Details Cards */}
+                            <div className="space-y-4 mb-8">
+                                {/* Email */}
+                                <div className="p-4 rounded-lg border border-white/[0.06] bg-black/30 hover:border-gold/30 transition-all duration-300">
+                                    <div className="flex items-center justify-between mb-1.5">
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="w-7 h-7 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+                                                <Mail className="w-3.5 h-3.5" />
+                                            </div>
+                                            <span className="font-body text-[10px] uppercase tracking-widest text-cream/40 font-medium">
+                                                Mail ID
+                                            </span>
                                         </div>
-
-                                        {/* Role selector */}
-                                        <div className="space-y-2">
-                                            <label className="block font-body text-[9px] uppercase tracking-widest text-cream/30">
-                                                Your Role
-                                            </label>
-                                            <Select required value={role} onValueChange={setRole}>
-                                                <SelectTrigger className="bg-transparent border-0 border-b border-input rounded-none px-0 h-auto py-3 text-sm text-cream focus:ring-0 focus:border-gold transition-colors cursor-pointer">
-                                                    <SelectValue placeholder="Select your role..." />
-                                                </SelectTrigger>
-                                                <SelectContent className="bg-ink border-graphite/40">
-                                                    {ROLES.map((r) => (
-                                                        <SelectItem key={r.value} value={r.value} className="text-cream focus:bg-gold/20 focus:text-cream cursor-pointer">
-                                                            {r.label}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-
-                                        {/* Progress bar */}
-                                        <div className="h-[1px] w-full bg-white/[0.06]">
-                                            <div
-                                                className="h-full bg-gold/60 transition-all duration-500"
-                                                style={{ width: email && role ? '100%' : email || role ? '50%' : '0%' }}
-                                            />
-                                        </div>
-
-                                        {/* Submit */}
-                                        <Button
-                                            type="submit"
-                                            disabled={loading || !email || !role}
-                                            className="w-full bg-gold text-obsidian py-4 font-body font-semibold text-xs uppercase tracking-widest hover:bg-cream transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed rounded-none h-auto"
+                                        <button
+                                            type="button"
+                                            onClick={() => copyToClipboard('mariyamrafhiya8634@gmail.com', 'email')}
+                                            className="text-xs flex items-center gap-1 text-cream/40 hover:text-gold transition-colors py-1 px-2 rounded hover:bg-white/5 cursor-pointer"
+                                            title="Copy email address"
                                         >
-                                            {loading ? (
+                                            {copiedEmail ? (
                                                 <>
-                                                    <div className="w-3 h-3 border border-obsidian/40 border-t-obsidian rounded-full animate-spin" />
-                                                    Preparing...
+                                                    <Check className="w-3 h-3 text-gold" />
+                                                    <span className="text-[10px] text-gold font-medium">Copied</span>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0-3-3m3 3 3-3M3 17V7a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                                    </svg>
-                                                    Download Resume & Portfolio
+                                                    <Copy className="w-3 h-3" />
+                                                    <span className="text-[10px]">Copy</span>
                                                 </>
                                             )}
-                                        </Button>
-
-                                        <p className="font-body text-[9px] text-cream/20 text-center leading-relaxed">
-                                            By downloading, you agree to receive occasional updates on new work and availability.
-                                        </p>
-                                    </form>
-                                </>
-                            ) : (
-                                <div className="py-8 text-center space-y-4">
-                                    <div className="w-12 h-12 rounded-full border border-gold/40 flex items-center justify-center mx-auto mb-6">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gold">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="m5 13 4 4L19 7" />
-                                        </svg>
+                                        </button>
                                     </div>
-                                    <p className="font-hand text-gold text-2xl">Download Started.</p>
-                                    <p className="font-body text-sm text-cream/40 font-light leading-relaxed max-w-xs mx-auto">
-                                        Your file is downloading now! My full resume and portfolio are on their way. Looking forward to potentially working together.
-                                    </p>
-                                    <div className="pt-4">
-                                        <p className="font-hand text-cream/20 text-sm">— Mariyam Rafhiya, Video Editor</p>
+                                    <a
+                                        href="mailto:mariyamrafhiya8634@gmail.com"
+                                        className="font-body text-sm md:text-base text-cream hover:text-gold font-medium transition-colors block break-all"
+                                    >
+                                        mariyamrafhiya8634@gmail.com
+                                    </a>
+                                </div>
+
+                                {/* Phone */}
+                                <div className="p-4 rounded-lg border border-white/[0.06] bg-black/30 hover:border-gold/30 transition-all duration-300">
+                                    <div className="flex items-center justify-between mb-1.5">
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="w-7 h-7 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+                                                <Phone className="w-3.5 h-3.5" />
+                                            </div>
+                                            <span className="font-body text-[10px] uppercase tracking-widest text-cream/40 font-medium">
+                                                No / Phone
+                                            </span>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => copyToClipboard('9740773854', 'phone')}
+                                            className="text-xs flex items-center gap-1 text-cream/40 hover:text-gold transition-colors py-1 px-2 rounded hover:bg-white/5 cursor-pointer"
+                                            title="Copy phone number"
+                                        >
+                                            {copiedPhone ? (
+                                                <>
+                                                    <Check className="w-3 h-3 text-gold" />
+                                                    <span className="text-[10px] text-gold font-medium">Copied</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Copy className="w-3 h-3" />
+                                                    <span className="text-[10px]">Copy</span>
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <a
+                                            href="tel:9740773854"
+                                            className="font-body text-sm md:text-base text-cream hover:text-gold font-medium transition-colors"
+                                        >
+                                            +91 9740773854
+                                        </a>
+                                        <span className="text-[10px] font-hand text-gold/70">Call or WhatsApp</span>
                                     </div>
                                 </div>
-                            )}
+                            </div>
+
+                            {/* Direct Action Buttons */}
+                            <div className="space-y-3">
+                                <Button
+                                    asChild
+                                    className="w-full bg-gold text-obsidian py-4 font-body font-semibold text-xs uppercase tracking-widest hover:bg-cream transition-colors duration-300 rounded-none h-auto justify-center"
+                                >
+                                    <a href="mailto:mariyamrafhiya8634@gmail.com">
+                                        <Mail className="w-4 h-4 mr-2" />
+                                        Send an Email
+                                    </a>
+                                </Button>
+
+                                <div className="grid grid-cols-2 gap-3">
+                                    <Button
+                                        asChild
+                                        variant="outline"
+                                        className="border-white/10 text-cream/80 hover:text-cream hover:border-gold/40 hover:bg-white/[0.03] text-[11px] font-body uppercase tracking-wider py-3 h-auto rounded-none"
+                                    >
+                                        <a href="tel:9740773854">
+                                            <Phone className="w-3.5 h-3.5 mr-1.5 text-gold" />
+                                            Call Directly
+                                        </a>
+                                    </Button>
+
+                                    <Button
+                                        asChild
+                                        variant="outline"
+                                        className="border-white/10 text-cream/80 hover:text-cream hover:border-gold/40 hover:bg-white/[0.03] text-[11px] font-body uppercase tracking-wider py-3 h-auto rounded-none"
+                                    >
+                                        <a
+                                            href="https://wa.me/919740773854"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <MessageCircle className="w-3.5 h-3.5 mr-1.5 text-gold" />
+                                            WhatsApp
+                                        </a>
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Secondary CTA */}
-                        <Button
-                            asChild
-                            variant="ghost"
-                            className="mt-6 p-5 border border-white/[0.04] w-full justify-between h-auto rounded-none hover:border-gold/20 transition-colors"
-                        >
-                            <a href="#">
-                                <div className="text-left">
-                                    <p className="font-body text-xs text-cream/50 uppercase tracking-widest mb-1">Prefer to talk first?</p>
-                                    <p className="font-hand text-cream/30 text-sm">Book a 20-min intro call</p>
+                        {/* Resume download quick link */}
+                        <div className="border border-white/[0.06] p-4 rounded-xl flex items-center justify-between bg-white/[0.01] hover:border-gold/20 transition-colors">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-cream/60">
+                                    <Download className="w-4 h-4" />
                                 </div>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
-                                    className="text-cream/20 group-hover:text-gold group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
-                                </svg>
-                            </a>
-                        </Button>
+                                <div>
+                                    <p className="font-body text-xs text-cream/80 font-medium">Looking for my CV?</p>
+                                    <p className="font-body text-[10px] text-cream/40">Complete credentials & work history</p>
+                                </div>
+                            </div>
+                            <Button
+                                asChild
+                                variant="ghost"
+                                size="sm"
+                                className="text-gold hover:text-cream text-xs font-body uppercase tracking-widest hover:bg-transparent px-2"
+                            >
+                                <a href="/resume.pdf" download="Mariyam_Rafhiya_Resume.pdf" className="flex items-center gap-1">
+                                    Download PDF
+                                    <ArrowUpRight className="w-3.5 h-3.5" />
+                                </a>
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     );
 }
-
